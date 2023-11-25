@@ -46,7 +46,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    game = new GameMechs();
+    game = new GameMechs(15,30);
     playerObj = new Player(game);
 }
 
@@ -66,8 +66,9 @@ void RunLogic(void)
         game->setExitTrue();
     }
 
-    playerObj->updatePlayerDir();
     playerObj->movePlayer();
+    playerObj->updatePlayerDir();
+    
 
     game->clearInput();
 }
@@ -79,12 +80,10 @@ void DrawScreen(void)
     objPos myPos;
     playerObj->getPlayerPos(myPos); 
 
-    int i = 0;
-    int j = 0;
     
-    for (i = 0; i < game->getBoardSizeX(); i++) 
+    for (int i = 0; i < game->getBoardSizeX(); i++) 
     {
-        for (j = 0; j < game->getBoardSizeY(); j++) 
+        for (int j = 0; j < game->getBoardSizeY(); j++) 
         {
             if (i == 0 || i == game->getBoardSizeX() - 1 || j == 0 || j == game->getBoardSizeY()- 1) 
             {
@@ -93,7 +92,7 @@ void DrawScreen(void)
             
             else if (i == myPos.x && j == myPos.y) 
             {
-                MacUILib_printf("%c", myPos.symbol);
+               MacUILib_printf("%c", myPos.symbol);
             } 
             
             else 

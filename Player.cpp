@@ -28,42 +28,39 @@ void Player::updatePlayerDir()
 {
     // BREAKPOINT Check for input Processing w/ Aman, defo not via getChar()
     char input = mainGameMechsRef->getInput();
-    switch(input)
-        {
-            // w key
-            case 119:
-                if (myDir != DOWN)  // Only change direction if not currently moving down
-                {
-                    myDir = UP;
-                }
-                break;
-            // a
-            case 97:
-                if (myDir != RIGHT)  // Only change direction if not currently moving right
-                {
+    if(input != 0)  // if not null character
+    {
+        switch(input)
+        {                      
+            case 'a':
+                if(myDir != RIGHT){
                     myDir = LEFT;
                 }
                 break;
             
-             // s
-            case 115:
-                if (myDir != UP)  // Only change direction if not currently moving up
-                {
-                    myDir = DOWN;
-                }
-                break;
-            // d
-            case 100:
-                if (myDir != LEFT)  // Only change direction if not currently moving left
-                {
+            case 'd':
+                if(myDir != LEFT){
                     myDir = RIGHT;
                 }
                 break;
-
-            default:
+            
+            case 'w':
+                if(myDir != DOWN){
+                    myDir = UP;
+                }
+                break;
+            
+            case 's':
+                if(myDir != UP){
+                    myDir = DOWN;
+                }
                 break;
             
         }
+
+        mainGameMechsRef->clearInput();
+        
+    }
 
 }
 
@@ -75,19 +72,19 @@ void Player::movePlayer()
         {
             case LEFT:
                 if (myDir != RIGHT)  // Only move if not moving in the opposite direction
-                    playerPos.x -= 1;
+                    playerPos.y -= 1;
                 break;
             case RIGHT:
                 if (myDir != LEFT)  // Only move if not moving in the opposite direction
-                    playerPos.x += 1;
+                    playerPos.y += 1;
                 break;
             case UP:
                 if (myDir != DOWN)  // Only move if not moving in the opposite direction
-                    playerPos.y -= 1;
+                    playerPos.x -= 1;
                 break;
             case DOWN:
                 if (myDir != UP)  // Only move if not moving in the opposite direction
-                    playerPos.y += 1;
+                    playerPos.x += 1;
                 break;
         }
     }
