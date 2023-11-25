@@ -1,5 +1,6 @@
 #include "GameMechs.h"
 
+
 GameMechs::GameMechs()
 {
     boardSizeX = 15;
@@ -8,6 +9,8 @@ GameMechs::GameMechs()
     score = 0;
     exitFlag = false;
     loseFlag = false;
+    foodPos.setObjPos(-1,-1,'o');
+
 }
 
 GameMechs::GameMechs(int boardX, int boardY)
@@ -18,6 +21,10 @@ GameMechs::GameMechs(int boardX, int boardY)
     score = 0;
     exitFlag = false;
     loseFlag = false;
+
+    foodPos.setObjPos(-1,-1,'o');
+        
+
 }
 
 // do you need a destructor?
@@ -80,4 +87,35 @@ void GameMechs::incrementScore()
 {
     score++;
 }
+
+void GameMechs::generateFood(objPos blockOff)
+{
+    
+    bool overlaps = true;
+    int targetX,targetY;
+
+    do {
+        
+        overlaps = false;
+        targetX = (rand()%(boardSizeX-2)) + 1; //adds 1 to make sure it doesn't generate on left border
+        targetY = (rand()%(boardSizeY-2)) + 1;
+
+        if(blockOff.x == targetX && blockOff.y == targetY){
+            overlaps = true;
+        }
+
+    } while(overlaps);
+    
+    foodPos.x = targetX;
+    foodPos.y = targetY;
+
+    
+
+}
+
+void GameMechs::getFoodPos(objPos &returnPos)
+{
+    returnPos = foodPos;
+}
+
 

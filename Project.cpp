@@ -12,6 +12,8 @@ using namespace std;
 
 GameMechs* game;
 Player* playerObj;
+objPos myPos;
+
 
 
 void Initialize(void);
@@ -48,6 +50,13 @@ void Initialize(void)
 
     game = new GameMechs(15,30);
     playerObj = new Player(game);
+    
+    
+
+    srand(time(NULL));
+    
+    game->generateFood(myPos);
+    
 }
 
 void GetInput(void)
@@ -65,7 +74,7 @@ void RunLogic(void)
     if(game->getInput() == 27){
         game->setExitTrue();
     }
-
+    
     playerObj->movePlayer();
     playerObj->updatePlayerDir();
     
@@ -75,10 +84,13 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
+    
     MacUILib_clearScreen(); 
     
-    objPos myPos;
+    objPos foodPos;
     playerObj->getPlayerPos(myPos); 
+
+    game->getFoodPos(foodPos);
 
     
     for (int i = 0; i < game->getBoardSizeX(); i++) 
@@ -94,6 +106,11 @@ void DrawScreen(void)
             {
                MacUILib_printf("%c", myPos.symbol);
             } 
+
+            else if (i == foodPos.x && j == foodPos.y) 
+            {
+               MacUILib_printf("%c", foodPos.symbol);
+            } 
             
             else 
             {
@@ -102,6 +119,9 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }      
+    MacUILib_printf("%d\n", foodPos.x);
+    MacUILib_printf("%d\n", foodPos.y);
+    MacUILib_printf("%d\n", foodPos.symbol);
 
 }
 
