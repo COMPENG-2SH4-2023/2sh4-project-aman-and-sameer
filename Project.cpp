@@ -61,25 +61,20 @@ void Initialize(void)
 
 void GetInput(void)
 {
-   
-    if(MacUILib_hasChar() != 0){
-        game->setInput(MacUILib_getChar());
-    }
+    
+    game->setInput(game->getInput());
+    
 
 }
 
 void RunLogic(void)
 {
     
-    if(game->getInput() == 27){
-        game->setExitTrue();
-    }
-    
     playerObj->movePlayer();
     playerObj->updatePlayerDir();
-    
 
     game->clearInput();
+
 }
 
 void DrawScreen(void)

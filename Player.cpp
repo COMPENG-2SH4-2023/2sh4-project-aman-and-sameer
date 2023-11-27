@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GameMechs.h"
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -31,7 +32,11 @@ void Player::updatePlayerDir()
     if(input != 0)  // if not null character
     {
         switch(input)
-        {                      
+        {            
+
+            case 27:
+                mainGameMechsRef->setExitTrue();
+
             case 'a':
                 if(myDir != RIGHT){
                     myDir = LEFT;
