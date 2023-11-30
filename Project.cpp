@@ -140,9 +140,6 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }      
-    MacUILib_printf("%d\n", foodPos.x);
-    MacUILib_printf("%d\n", foodPos.y);
-    MacUILib_printf("%d\n", foodPos.symbol);
 
 }
 
