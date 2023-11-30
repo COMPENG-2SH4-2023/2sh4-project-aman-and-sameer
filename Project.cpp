@@ -76,6 +76,16 @@ void RunLogic(void)
 
     game->clearInput();
 
+    objPosArrayList* snakeBody = playerObj->getPlayerPos();
+
+    if (playerObj->checkFoodConsumption())
+    {
+        game->incrementScore();
+        playerObj->increasePlayerLength();
+        game->generateFood(snakeBody);
+
+    } 
+
 }
 
 void DrawScreen(void)
@@ -89,6 +99,9 @@ void DrawScreen(void)
 
     objPos foodPos;
     game->getFoodPos(foodPos);
+
+    int score;
+    score = game->getScore();
 
     
     for (int i = 0; i < game->getBoardSizeX(); i++) 

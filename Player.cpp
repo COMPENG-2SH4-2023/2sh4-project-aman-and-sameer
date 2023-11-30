@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "GameMechs.h"
+#include "objPosArrayList.h"
 
 
 Player::Player(GameMechs* thisGMRef)
@@ -8,20 +9,10 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     objPos tempPos;
-    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
+    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '@');
 
     playerPosList = new objPosArrayList();
     
-    //purely for testing purposes
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
-    playerPosList->insertHead(tempPos);
     playerPosList->insertHead(tempPos);
 
 
@@ -125,3 +116,33 @@ void Player::movePlayer()
 
 }
 
+bool Player::checkFoodConsumption() 
+{
+    objPos tempFood;
+
+    mainGameMechsRef->getFoodPos(tempFood);
+
+    objPos tempHead;
+
+    playerPosList->getElement(tempHead, 0);
+
+    bool overlap;
+    overlap = tempFood.isPosEqual(&tempHead);
+
+    if(overlap){
+        return true;
+    }
+
+    else {
+        return false;
+    }
+
+
+}
+
+void Player::increasePlayerLength()
+{
+    objPos tempHead;
+    playerPosList->getHeadElement(tempHead);
+    playerPosList->insertHead(tempHead);
+}
