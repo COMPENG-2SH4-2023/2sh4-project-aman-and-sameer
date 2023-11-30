@@ -50,12 +50,13 @@ void Initialize(void)
 
     game = new GameMechs(15,30);
     playerObj = new Player(game);
-    
+
+    objPosArrayList* snakeBody = playerObj->getPlayerPos();
     
 
     srand(time(NULL));
     
-    game->generateFood(myPos);
+    game->generateFood(snakeBody);
     
 }
 
