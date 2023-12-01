@@ -111,8 +111,32 @@ void Player::movePlayer()
             currentHead.y = mainGameMechsRef->getBoardSizeY()-2;
     }
 
+    
+    
     playerPosList->insertHead(currentHead);
     playerPosList->removeTail();
+
+    int sizeList;
+    sizeList = playerPosList->getSize();
+
+    objPos tempHead;
+
+    objPos tempBody;
+    
+    playerPosList->getHeadElement(tempHead);
+    
+    for (int i = 0; i < sizeList; i++)
+    {
+       
+       playerPosList->getElement(tempBody, i);
+
+        if (tempHead.isPosEqual(&tempBody))
+        // if it doesn't work, try if tempBody.x == tempBody.x && tempHead.x == tempBody.x;
+        {
+            mainGameMechsRef->setLoseFlag();
+            mainGameMechsRef->setExitTrue();
+        }
+    }
 
 }
 
@@ -145,4 +169,16 @@ void Player::increasePlayerLength()
     objPos tempHead;
     playerPosList->getHeadElement(tempHead);
     playerPosList->insertHead(tempHead);
+}
+
+bool Player::checkSelfCollision()
+{
+    if (mainGameMechsRef->getLoseFlagStatus() && mainGameMechsRef->getExitFlagStatus())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
