@@ -95,7 +95,7 @@ void GameMechs::incrementScore()
     score++;
 }
 
-void GameMechs::generateFood(objPosArrayList* blockOff)
+void GameMechs::generateFood(objPosArrayList &blockOff)
 {
     
     bool overlaps = true;
@@ -107,9 +107,9 @@ void GameMechs::generateFood(objPosArrayList* blockOff)
         targetX = (rand()%(boardSizeX-2)) + 1; //adds 1 to make sure it doesn't generate on left border
         targetY = (rand()%(boardSizeY-2)) + 1;
 
-        for(int i=0;i<blockOff->getSize();i++){
+        for(int i=0;i<blockOff.getSize();i++){
             objPos tempObj;
-            blockOff->getElement(tempObj, i);
+            blockOff.getElement(tempObj, i);
 
             if(tempObj.x == targetX && tempObj.y == targetY){
                 overlaps = true;

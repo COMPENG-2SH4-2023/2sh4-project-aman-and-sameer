@@ -50,13 +50,9 @@ void Initialize(void)
 
     game = new GameMechs(15,30);
     playerObj = new Player(game);
-
     objPosArrayList* snakeBody = playerObj->getPlayerPos();
-    
-
     srand(time(NULL));
-    
-    game->generateFood(snakeBody);
+    game->generateFood(*snakeBody);
     
 }
 
@@ -71,20 +67,18 @@ void GetInput(void)
 void RunLogic(void)
 {
     
-    playerObj->movePlayer();
-    playerObj->updatePlayerDir();
-
-    game->clearInput();
+    
+    
 
     objPosArrayList* snakeBody = playerObj->getPlayerPos();
+    playerObj->updatePlayerDir();
+    playerObj->movePlayer();
+    game->clearInput();
 
-    if (playerObj->checkFoodConsumption())
-    {
-        game->incrementScore();
-        playerObj->increasePlayerLength();
-        game->generateFood(snakeBody);
 
-    } 
+    
+
+    
 
 }
 
@@ -141,6 +135,8 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     }      
 
+    MacUILib_printf("Score: %d\n", score);
+
 }
 
 void LoopDelay(void)
@@ -152,6 +148,11 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
+
+    if(game->getLoseFlagStatus() == true){
+        MacUILib_printf("Game over. You scored %d points! Well done!", game->getScore());
+    }
+
   
     MacUILib_uninit();
 }

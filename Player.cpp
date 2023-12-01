@@ -9,7 +9,7 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     objPos tempPos;
-    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '@');
+    tempPos.setObjPos((mainGameMechsRef->getBoardSizeX())/2, (mainGameMechsRef->getBoardSizeY())/2, '*');
 
     playerPosList = new objPosArrayList();
     
@@ -76,8 +76,8 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     objPos currentHead;
-
     playerPosList->getHeadElement(currentHead);
+
     if (myDir != STOP)
     {
         switch(myDir)
@@ -111,32 +111,23 @@ void Player::movePlayer()
             currentHead.y = mainGameMechsRef->getBoardSizeY()-2;
     }
 
-    
-    
-    playerPosList->insertHead(currentHead);
-    playerPosList->removeTail();
 
-    int sizeList;
-    sizeList = playerPosList->getSize();
-
-    objPos tempHead;
-
-    objPos tempBody;
-    
-    playerPosList->getHeadElement(tempHead);
-    
-    for (int i = 0; i < sizeList; i++)
-    {
-       
-       playerPosList->getElement(tempBody, i);
-
-        if (tempHead.isPosEqual(&tempBody))
-        // if it doesn't work, try if tempBody.x == tempBody.x && tempHead.x == tempBody.x;
-        {
-            mainGameMechsRef->setLoseFlag();
-            mainGameMechsRef->setExitTrue();
-        }
+    if(checkSelfCollision() == true){
+        mainGameMechsRef->setLoseFlag();
+        mainGameMechsRef->setExitTrue();
     }
+
+    if (checkFoodConsumption())
+    {
+        mainGameMechsRef->incrementScore();
+        playerPosList->insertHead(currentHead);
+        mainGameMechsRef->generateFood(*playerPosList);
+    }else{
+        playerPosList->insertHead(currentHead);
+        playerPosList->removeTail();
+    }
+
+
 
 }
 
@@ -173,12 +164,20 @@ void Player::increasePlayerLength()
 
 bool Player::checkSelfCollision()
 {
-    if (mainGameMechsRef->getLoseFlagStatus() && mainGameMechsRef->getExitFlagStatus())
+    objPos tempHead;
+    objPos tempBody;
+    playerPosList->getHeadElement(tempHead);
+    
+    for(int i = 1; i < playerPosList->getSize(); i++)
     {
-        return true;
+        playerPosList->getElement(tempBody, i);
+
+        if (tempHead.isPosEqual(&tempBody))
+        {
+            return true;
+        }
+        
     }
-    else
-    {
-        return false;
-    }
+
+    return false;
 }
