@@ -7,6 +7,8 @@ objPos::objPos()
     symbol = 0; //NULL
 }
 
+
+// Assign coordinates to player
 objPos::objPos(objPos &o)
 {
     x = o.x;
@@ -36,6 +38,8 @@ void objPos::setObjPos(int xPos, int yPos, char sym)
     symbol = sym;
 }
 
+
+// Obtain player position
 void objPos::getObjPos(objPos &returnPos)
 {
     returnPos.setObjPos(x, y, symbol);
@@ -46,6 +50,7 @@ char objPos::getSymbol()
     return symbol;
 }
 
+// Compare 2 positions, true if same, false if not
 bool objPos::isPosEqual(const objPos* refPos)
 {
     return (refPos->x == x && refPos->y == y);

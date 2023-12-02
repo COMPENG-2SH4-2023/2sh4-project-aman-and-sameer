@@ -4,18 +4,21 @@
 
 GameMechs::GameMechs()
 {
+    
+    // Generate Dimensions + Inital Game Conditions
     boardSizeX = 15;
     boardSizeY = 30;
     input = 0;
     score = 0;
     exitFlag = false;
     loseFlag = false;
-    foodPos.setObjPos(-1,-1,'o');
+    foodPos.setObjPos(-1,-1,'o'); // Initial food spawn
 
 }
 
-GameMechs::GameMechs(int boardX, int boardY)
+GameMechs::GameMechs(int boardX, int boardY) // If user wishes to specify dimensions
 {
+    
     boardSizeX = boardX;
     boardSizeY = boardY;
     input = 0;
@@ -33,13 +36,14 @@ GameMechs::GameMechs(int boardX, int boardY)
 
 
 
-bool GameMechs::getExitFlagStatus()
+// End game if exitFlag and loseFlag = True
+
+bool GameMechs::getExitFlagStatus() 
 {
     return exitFlag;
 }
 
-bool GameMechs::getLoseFlagStatus()
-{
+bool GameMechs::getLoseFlagStatus() {
     return loseFlag;
 }
 

@@ -30,7 +30,7 @@ int main(void)
 
     Initialize();
 
-    while(game->getExitFlagStatus() == false)  
+    while(game->getExitFlagStatus() == false)  // run game while exitFlag = False (no head + tail collision)
     {
         GetInput();
         RunLogic();
@@ -38,7 +38,7 @@ int main(void)
         LoopDelay();
     }
 
-    CleanUp();
+    CleanUp(); // deallocate dynamic variables + all sorts of cleanup
 
 }
 
@@ -52,7 +52,7 @@ void Initialize(void)
     playerObj = new Player(game);
     objPosArrayList* snakeBody = playerObj->getPlayerPos();
     srand(time(NULL));
-    game->generateFood(*snakeBody);
+    game->generateFood(*snakeBody); // pass in ptr to player array
     
 }
 
@@ -70,10 +70,10 @@ void RunLogic(void)
     
     
 
-    objPosArrayList* snakeBody = playerObj->getPlayerPos();
+    objPosArrayList* snakeBody = playerObj->getPlayerPos(); // receive position of all segments
     playerObj->updatePlayerDir();
     playerObj->movePlayer();
-    game->clearInput();
+    game->clearInput(); // clear input so same input not processed multiple times
 
 
     
@@ -97,11 +97,13 @@ void DrawScreen(void)
     int score;
     score = game->getScore();
 
-    
+    // generate board
     for (int i = 0; i < game->getBoardSizeX(); i++) 
     {
         for (int j = 0; j < game->getBoardSizeY(); j++) 
         {
+            
+            // print player snake on board, iterate over all elements and print
             drawn = false;
             for(int x=0; x<playerBody->getSize();x++){
                 playerBody->getElement(tempBody,x);
@@ -116,12 +118,13 @@ void DrawScreen(void)
             if(drawn){
                 continue;
             }
-
+            
+            // border conditions
             if (i == 0 || i == game->getBoardSizeX() - 1 || j == 0 || j == game->getBoardSizeY()- 1) 
             {
                 MacUILib_printf("#");
             } 
-            
+            // food spawning
             else if (i == foodPos.x && j == foodPos.y) 
             {
                MacUILib_printf("%c", foodPos.symbol);
@@ -134,7 +137,7 @@ void DrawScreen(void)
         }
         MacUILib_printf("\n");
     }      
-
+    // display score
     MacUILib_printf("Score: %d\n", score);
 
 }
@@ -148,7 +151,7 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();    
-
+    // print losing message
     if(game->getLoseFlagStatus() == true){
         MacUILib_printf("Game over. You scored %d points! Well done!", game->getScore());
     }
