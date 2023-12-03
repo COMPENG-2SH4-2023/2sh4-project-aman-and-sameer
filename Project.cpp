@@ -12,9 +12,6 @@ using namespace std;
 
 GameMechs* game;
 Player* playerObj;
-objPos myPos;
-
-
 
 void Initialize(void);
 void GetInput(void);

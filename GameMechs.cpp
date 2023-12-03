@@ -136,4 +136,3 @@ void GameMechs::getFoodPos(objPos &returnPos)
     returnPos = foodPos;
 }
 
-
